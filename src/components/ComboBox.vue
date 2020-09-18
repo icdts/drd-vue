@@ -1,8 +1,6 @@
 <template>
   <div class="combo-box">
     <strong>{{ labelName }}</strong>
-    <br />
-    <label>{{labelName}}</label>
     <select :name="labelName" @change="$emit('value-changed',val.id)">
       <option
         v-for="(val,key) in options"
@@ -28,7 +26,7 @@ export default {
 
 <style scoped>
 div.combo-box {
-  display: inline-block;
-  text-align: center;
+  display: inline-flex;
+  flex-direction: column;
 }
 </style>

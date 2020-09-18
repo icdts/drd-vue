@@ -1,9 +1,63 @@
 <template>
   <div id="app">
-    <div class="filters">
-      <RadioSet :value="resultType" :options="resultTypes" @value-changed="resultTypeChanged" />
-      <br />
-      <ComboBox :value="server" :options="serverOptions" @value-changed="serverChanged" />
+    <div class="header">
+      <fieldset class="filters">
+        <legend>DRD Results</legend>
+        <RadioSet :value="resultType" :options="resultTypes" @value-changed="resultTypeChanged" />
+        <br />
+        <br />
+        <ComboBox
+          labelName="Server:"
+          :value="server"
+          :options="serverOptions"
+          @value-changed="serverChanged"
+        />
+      </fieldset>
+      <fieldset class="filters">
+        <legend>Report Filters</legend>
+        <div class="horizontal">
+          <div id="report_filters_left" class="vertical">
+            <ComboBox
+              labelName="Process Area:"
+              :value="processArea"
+              :options="processAreaOptions"
+              @value-changed="processAreaChanged"
+            />
+            <label>Name/Number Find:</label>
+            <label>Source Results Find:</label>
+          </div>
+          <div id="report_filters_mid" class="vertical">
+            <ComboBox
+              labelName="Object:"
+              :value="object"
+              :options="objectOptions"
+              @value-changed="objectChanged"
+            />
+            <input />
+            <input />
+          </div>
+          <div id="report_filters_right" class="vertical">
+            <ComboBox
+              labelName="Report Type:"
+              :value="reportType"
+              :options="reportTypeOptions"
+              @value-changed="serverChanged"
+            />
+            <div class="horizontal">
+              <ComboBox
+                labelName="Sort"
+                :value="sort"
+                :options="sortOptions"
+                @value-changed="sortChanged"
+              />
+              <button id="sortDescending" />
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset class="filters">
+        <legend>Source Restriction</legend>
+      </fieldset>
     </div>
     <div class="reports"></div>
   </div>
@@ -34,7 +88,17 @@ export default {
         { id: 2, name: "3M-PRD" },
       ],
       processArea: "",
+      processAreaOptions: [
+        { id: 0, name: "MTD" },
+        { id: 1, name: "RTR" },
+        { id: 2, name: "FTS" },
+      ],
       object: "",
+      objectOptions: [
+        { id: 0, name: "MM" },
+        { id: 1, name: "FSCM" },
+        { id: 2, name: "PD" },
+      ],
       reportType: 0,
       reportTypeOptions: [{ id: 0, name: "" }],
       nameNumberSearch: "",
@@ -64,6 +128,9 @@ export default {
     serverChanged(new_value) {
       this.server = new_value;
     },
+    sortChanged(new_value) {
+      this.sort = new_value;
+    },
   },
 };
 </script>
@@ -73,11 +140,39 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  text-align: left;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 10px;
 }
-div.filters {
-  display: inline-block;
+#app * {
+  margin: 1px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+}
+.filters {
+  display: flex;
+  flex-direction: column;
+  border-style: ridge;
+}
+.horizontal {
+  display: inline-flex;
+  flex-direction: row;
+}
+.vertical {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  justify-content: space-around;
+}
+legend {
+  font-size: 8px;
+  text-align: left;
+}
+#sortDescending {
+  width: 2px;
+  height: 20px;
 }
 </style>

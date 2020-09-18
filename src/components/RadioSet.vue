@@ -1,7 +1,6 @@
 <template>
   <div class="radio-set">
     <strong>{{ labelName }}</strong>
-    <br />
     <label v-for="(val,key) in options" :key="key">
       {{val.name}}
       <input
